@@ -58,6 +58,19 @@ public class Trie {
 		}
 		return true;
 	}
-	
+
+	public boolean containsWord(String word) {
+
+		TrieNode lastNode = root;
+		for (int i = 0; i < word.length(); i++) {
+			lastNode = lastNode.getNode(word.charAt(i));
+			// If no node matches, then no words exist, return empty list
+			if (lastNode == null)
+				return false;
+		}
+		if (lastNode.isWord())
+			return true;
+		return false;
+	}
 
 }
