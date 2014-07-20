@@ -1,11 +1,18 @@
 package de.number.Dictionary;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.Map.Entry;
 
 public class TrieNode {
+
 	private TrieNode parent;
-	private TrieNode[] children;
+	// private TrieNode[] children;
+	private HashMap<Character, TrieNode> children;
+
 	private boolean isLeaf; // Quick way to check if any children exist
 	private boolean isWord; // Does this node represent the last character of a
 							// word
@@ -15,7 +22,7 @@ public class TrieNode {
 	 * Constructor for top level root node.
 	 */
 	public TrieNode() {
-		children = new TrieNode[57];
+		children = new HashMap<Character, TrieNode>();
 		isLeaf = true;
 		isWord = false;
 	}
@@ -36,21 +43,25 @@ public class TrieNode {
 	 * @param word
 	 *            the word to add
 	 */
-	protected void addWord(String word) {
+	protected void add(String word) {
 		isLeaf = false;
-		int charPos = 0;
+		if (word.length() < 1)
+			return;
 
-		charPos = word.charAt(0) - 'A';
+		char firstChar = word.charAt(0);
 
-		if (children[charPos] == null) {
-			children[charPos] = new TrieNode(word.charAt(0));
-			children[charPos].parent = this;
+		TrieNode childrenCharPos = children.get(firstChar);
+
+		if (childrenCharPos == null) {
+			childrenCharPos = new TrieNode(firstChar);
+			childrenCharPos.parent = this;
+			children.put(firstChar, childrenCharPos);
 		}
 
 		if (word.length() > 1) {
-			children[charPos].addWord(word.substring(1));
+			childrenCharPos.add(word.substring(1));
 		} else {
-			children[charPos].isWord = true;
+			childrenCharPos.isWord = true;
 		}
 	}
 
@@ -62,9 +73,7 @@ public class TrieNode {
 	 * @return
 	 */
 	protected TrieNode getNode(char c) {
-
-		return children[c - 'A'];
-
+		return children.get(c);
 	}
 
 	/**
@@ -79,51 +88,40 @@ public class TrieNode {
 
 		// If this node represents a word, add it
 		if (isWord) {
-			list.add(toString());
+			list.add(this.toString());
 		}
 
 		// If any children
 		if (!isLeaf) {
-			// Add any words belonging to any children
-			for (int i = 0; i < children.length; i++) {
-				if (children[i] != null) {
-					list.addAll(children[i].getWords());
-
+			Set<Entry<Character, TrieNode>> set = children.entrySet();
+			Iterator<Entry<Character, TrieNode>> i = set.iterator();
+			while (i.hasNext()) {
+				TrieNode child = i.next().getValue();
+				if (child != null) {
+					list.addAll(child.getWords());
 				}
 
 			}
-
 		}
-
 		return list;
+	}
 
+	public boolean isWord() {
+		return isWord;
 	}
 
 	/**
-	 * 
-	 * Gets the String that this node represents.
-	 * 
-	 * For example, if this node represents the character t, whose parent
-	 * 
-	 * represents the charater a, whose parent represents the character
-	 * 
-	 * c, then the String would be "cat".
+	 * Gets the String that this node represents. For example, if this node
+	 * represents the character t, whose parent represents the charater a, whose
+	 * parent represents the character c, then the String would be "cat".
 	 * 
 	 * @return
 	 */
-
-	public String toString()
-
-	{
-
+	public String toString() {
 		if (parent == null) {
 			return "";
-		}
-
-		else {
+		} else {
 			return parent.toString() + new String(new char[] { character });
 		}
-
 	}
-
 }

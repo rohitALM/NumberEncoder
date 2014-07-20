@@ -29,19 +29,24 @@ public class DictionaryReader {
 
 			while (scan.hasNextLine()) {
 				String word = scan.next();
-				feedDictMap(word);
+				//feedDictMap(word);
+				dictTrie.addWord(word);
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		populateDictTrie();
+		//populateDictTrie();
 		
-		List<String> words = dictTrie.getWords("B");
+		List<String> words = dictTrie.getWords("o");
 		for(String word : words) {
 			System.out.println(word);
 		}
+	}
+
+	public Trie getDictTrie() {
+		return dictTrie;
 	}
 
 	/**
