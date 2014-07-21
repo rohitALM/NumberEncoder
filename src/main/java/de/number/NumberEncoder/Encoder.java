@@ -5,6 +5,8 @@ package de.number.NumberEncoder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -45,13 +47,37 @@ public class Encoder {
 
 	private void computeOutputString(String input) {
 		input = input.replaceAll("\\D+", "");
-		for (int i = 0; i < input.length(); i++) {
-			System.out.println(input.charAt(i));
-		}
+		List<String> finalOutput = new ArrayList<String>();
+		List<String> possiblePrefixes = new ArrayList<String>();
+		String currentWord = "";
+		constructOutput(input, possiblePrefixes, currentWord, finalOutput);
+
 	}
 
-	private void recurseOutput(int num, char[] finalWordList) {
-		
+	private void constructOutput(String input, List<String> possiblePrefixes, String currentWord,
+			List<String> finalOutput) {
+
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param possiblePrefixes
+	 * @param currentPrefixList
+	 * @return
+	 */
+	private List<String> multiplyPrefixes(List<String> possiblePrefixes, List<String> currentPrefixList) {
+		if (0 == possiblePrefixes.size())
+			return currentPrefixList;
+
+		List<String> multipliedList = new ArrayList<String>();
+		for (int i = 0; i < possiblePrefixes.size(); i++) {
+			for (int j = 0; j < currentPrefixList.size(); j++) {
+				multipliedList.add(possiblePrefixes.get(i).concat(currentPrefixList.get(j)));
+			}
+		}
+		return multipliedList;
+
 	}
 
 }
