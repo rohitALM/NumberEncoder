@@ -68,7 +68,7 @@ public class Encoder {
 		int num = Character.digit(input.charAt(0), 10);
 
 		List<String> currentPrefixList = DigitWordMap.getDigitToWordMap().get(num);
-		List<String> newPossibilities = multiplyPrefixes(currentPrefixList, currentPrefixList);
+		List<String> newPossibilities = multiplyPrefixes(possiblePrefixes, currentPrefixList);
 		validatePrefixes(newPossibilities);
 		if(0 == newPossibilities.size()) {
 			addDigitAsIs();
