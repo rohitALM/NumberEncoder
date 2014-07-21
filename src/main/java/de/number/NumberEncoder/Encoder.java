@@ -15,19 +15,21 @@ import java.util.Scanner;
  */
 public class Encoder {
 
+	private DictionaryReader reader;
+
 	Encoder() {
 		init();
 
 	}
 
 	private void init() {
-		DictionaryReader reader = new DictionaryReader();
+		reader = new DictionaryReader();
 		reader.readFile();
-		DigitWordMap digitWordMap = new DigitWordMap();
+		DigitWordMap.buildMap();
 		encode();
 	}
 
-	private void encode() {
+	public void encode() {
 		File file = new File("input.txt");
 
 		try {
@@ -57,6 +59,40 @@ public class Encoder {
 	private void constructOutput(String input, List<String> possiblePrefixes, String currentWord,
 			List<String> finalOutput) {
 
+		// Exit from recursion if end of input is reached storing current word
+		// in final output string
+		if (0 == input.length()) {
+			finalOutput.add(currentWord);
+			return;
+		}
+		int num = Character.digit(input.charAt(0), 10);
+
+		List<String> currentPrefixList = DigitWordMap.getDigitToWordMap().get(num);
+		List<String> newPossibilities = multiplyPrefixes(currentPrefixList, currentPrefixList);
+		validatePrefixes(newPossibilities);
+		if(0 == newPossibilities.size()) {
+			addDigitAsIs();
+		}
+
+	}
+	
+	
+	private void addDigitAsIs() {
+		
+	}
+
+	/**
+	 * Validate prefixes by checking against entries in dictionary Removes
+	 * prefixes which are not present
+	 * 
+	 * @param prefixes
+	 */
+	private void validatePrefixes(List<String> prefixes) {
+		for (int i = 0; i < prefixes.size(); i++) {
+			if (!reader.getDictTrie().containsPrefix(prefixes.get(i))) {
+				prefixes.remove(i);
+			}
+		}
 	}
 
 	/**

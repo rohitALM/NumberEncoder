@@ -14,24 +14,24 @@ import java.util.Map;
  */
 public class DigitWordMap {
 
-	private Map<Integer, List<Character>> digitToWordMap = new HashMap<Integer, List<Character>>(10);
+	private static Map<Integer, List<String>> digitToWordMap = new HashMap<Integer, List<String>>(10);
 
-	DigitWordMap() {
-		buildMap();
+	private DigitWordMap() {
+
 	}
 
-	private void buildMap() {
+	public static void buildMap() {
 
-		List<Character> charList0 = Arrays.asList('e', 'E');
-		List<Character> charList1 = Arrays.asList('j', 'n', 'q', 'J', 'N', 'Q');
-		List<Character> charList2 = Arrays.asList('r', 'w', 'x', 'R', 'W', 'X');
-		List<Character> charList3 = Arrays.asList('d', 's', 'y', 'D', 'S', 'Y');
-		List<Character> charList4 = Arrays.asList('f', 't', 'F', 'T');
-		List<Character> charList5 = Arrays.asList('a', 'm', 'A', 'M');
-		List<Character> charList6 = Arrays.asList('c', 'i', 'v', 'C', 'I', 'V');
-		List<Character> charList7 = Arrays.asList('b', 'k', 'u', 'B', 'K', 'U');
-		List<Character> charList8 = Arrays.asList('l', 'o', 'p', 'L', 'O', 'P');
-		List<Character> charList9 = Arrays.asList('g', 'h', 'z', 'G', 'H', 'Z');
+		List<String> charList0 = Arrays.asList("e", "E");
+		List<String> charList1 = Arrays.asList("j", "n", "q", "J", "N", "Q");
+		List<String> charList2 = Arrays.asList("r", "w", "x", "R", "W", "X");
+		List<String> charList3 = Arrays.asList("d", "s", "y", "D", "S", "Y");
+		List<String> charList4 = Arrays.asList("f", "t", "F", "T");
+		List<String> charList5 = Arrays.asList("a", "m", "A", "M");
+		List<String> charList6 = Arrays.asList("c", "i", "v", "C", "I", "V");
+		List<String> charList7 = Arrays.asList("b", "k", "u", "B", "K", "U");
+		List<String> charList8 = Arrays.asList("l", "o", "p", "L", "O", "P");
+		List<String> charList9 = Arrays.asList("g", "h", "z", "G", "H", "Z");
 		digitToWordMap.put(0, charList0);
 		digitToWordMap.put(1, charList1);
 		digitToWordMap.put(2, charList2);
@@ -45,7 +45,7 @@ public class DigitWordMap {
 
 	}
 
-	public Map<Integer, List<Character>> getDigitToWordMap() {
+	public static Map<Integer, List<String>> getDigitToWordMap() {
 		return digitToWordMap;
 	}
 }
